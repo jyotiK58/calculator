@@ -1,25 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Calc />
     </div>
   );
 }
 
-export default App;
+function Calc() {
+  const [count, setCount] = useState(0);
+  const [step, setStep] = useState(1);
+
+  const date = new Date();
+  date.setDate(date.getDate() + count);
+
+  return (
+    <div>
+      <button onClick={() => setStep((step) => step + 1)}>Add</button>
+      <button onClick={() => setStep((step) => step - 1)}>Subtract</button>
+      <span>Step {step}</span>
+      <br />
+      <button onClick={() => setCount((count) => count + step)}>Add</button>
+      <button onClick={() => setCount((count) => count - step)}>
+        Subtract
+      </button>
+      <span>Count {count}</span>
+      <br />
+      {count === 0
+        ? "Today is"
+        : count > 0
+        ? ` ${count} day before was`
+        : ` And ${Math.abs(count)} days after`}{" "}
+      <span>{date.toDateString()}</span>
+    </div>
+  );
+}
